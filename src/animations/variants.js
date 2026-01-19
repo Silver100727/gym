@@ -200,3 +200,76 @@ export const glowEffect = {
     }
   }
 };
+
+// Floating particle animation for hero background
+export const floatingParticle = {
+  animate: (custom) => ({
+    y: [-20, 20, -20],
+    x: [-10, 10, -10],
+    opacity: [0.3, 0.6, 0.3],
+    transition: {
+      duration: custom?.duration || 8,
+      delay: custom?.delay || 0,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  })
+};
+
+// Gradient orb pulse
+export const orbPulse = {
+  animate: {
+    scale: [1, 1.2, 1],
+    opacity: [0.3, 0.5, 0.3],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  }
+};
+
+// Icon bounce for hover effects
+export const iconBounce = {
+  rest: { y: 0 },
+  hover: {
+    y: [-4, 0],
+    transition: {
+      duration: 0.4,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  }
+};
+
+// Shimmer effect for loading states
+export const shimmer = {
+  animate: {
+    x: ['-100%', '100%'],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "linear"
+    }
+  }
+};
+
+// Accordion expand/collapse
+export const accordion = {
+  collapsed: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut"
+    }
+  },
+  expanded: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut"
+    }
+  }
+};

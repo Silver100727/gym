@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Dumbbell, Heart, Flame, Leaf, ArrowRight } from 'lucide-react';
-import { fadeUp, staggerContainer, cardHover } from '../animations/variants';
+import { Dumbbell, Heart, Flame, Leaf, ArrowRight, ChevronRight } from 'lucide-react';
+import { fadeUp, staggerContainer, cardHover, iconBounce } from '../animations/variants';
 
 const programs = [
   {
@@ -72,42 +72,40 @@ export default function ProgramsSection() {
           {programs.map((program) => (
             <motion.div
               key={program.title}
-              className="group relative bg-dark-lighter rounded-lg p-6 border border-white/5 overflow-hidden"
+              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 hover:border-primary/30 rounded-2xl p-6 shadow-xl shadow-black/20 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 relative overflow-hidden"
               variants={fadeUp}
               initial="rest"
               whileHover="hover"
-              animate="rest"
             >
-              <motion.div variants={cardHover}>
-                {/* Gradient Background on Hover */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${program.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-                />
+              {/* Gradient Background Overlay */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${program.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500`} />
 
-                {/* Icon */}
-                <div
-                  className={`w-14 h-14 rounded-lg bg-gradient-to-br ${program.color} flex items-center justify-center mb-6`}
+              <div className="relative z-10">
+                {/* Icon with animation */}
+                <motion.div
+                  className={`w-16 h-16 rounded-xl bg-gradient-to-br ${program.color} p-3.5 mb-4 shadow-lg`}
+                  variants={iconBounce}
                 >
-                  <program.icon className="w-7 h-7 text-white" />
-                </div>
+                  <program.icon className="w-full h-full text-white" />
+                </motion.div>
 
                 {/* Content */}
-                <h3 className="text-xl font-heading font-semibold text-white mb-3">
+                <h3 className="text-xl font-heading font-bold text-white mb-3">
                   {program.title}
                 </h3>
-                <p className="text-gray-light text-sm mb-4">
+                <p className="text-gray-light text-sm mb-6">
                   {program.description}
                 </p>
 
-                {/* Link */}
+                {/* Learn More Link */}
                 <Link
                   to="/programs"
-                  className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all duration-300"
+                  className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all duration-300 text-sm font-semibold"
                 >
                   Learn More
-                  <ArrowRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4" />
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </motion.div>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Play } from 'lucide-react';
-import { fadeUp, staggerContainer } from '../animations/variants';
+import { ChevronRight, Play, Users, Award, TrendingUp } from 'lucide-react';
+import { fadeUp, staggerContainer, floatingParticle, orbPulse, iconBounce } from '../animations/variants';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -18,6 +18,45 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent" />
+
+        {/* Floating Particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          {Array.from({ length: 15 }, (_, i) => ({
+            id: i,
+            size: Math.random() * 200 + 100,
+            top: Math.random() * 100,
+            left: Math.random() * 100,
+            delay: Math.random() * 5,
+            duration: Math.random() * 10 + 10
+          })).map(p => (
+            <motion.div
+              key={p.id}
+              className="absolute rounded-full bg-primary/10 blur-2xl"
+              style={{
+                width: p.size,
+                height: p.size,
+                top: `${p.top}%`,
+                left: `${p.left}%`
+              }}
+              custom={{ duration: p.duration, delay: p.delay }}
+              variants={floatingParticle}
+              animate="animate"
+            />
+          ))}
+
+          {/* Gradient Orbs */}
+          <motion.div
+            className="absolute top-20 right-20 w-96 h-96 bg-gradient-radial from-primary/20 to-transparent rounded-full blur-3xl"
+            variants={orbPulse}
+            animate="animate"
+          />
+          <motion.div
+            className="absolute bottom-40 left-40 w-64 h-64 bg-gradient-radial from-orange-400/20 to-transparent rounded-full blur-3xl"
+            variants={orbPulse}
+            animate="animate"
+            style={{ animationDelay: '3s' }}
+          />
+        </div>
       </div>
 
       {/* Content */}
@@ -73,22 +112,35 @@ export default function Hero() {
             </Button>
           </motion.div>
 
-          {/* Stats */}
+          {/* Enhanced Stats */}
           <motion.div variants={fadeUp} className="mt-16">
             <Separator className="mb-8" />
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-              <div>
-                <div className="text-4xl font-heading font-bold text-primary">10K+</div>
-                <div className="text-gray-light text-sm mt-1">Active Members</div>
-              </div>
-              <div>
-                <div className="text-4xl font-heading font-bold text-primary">50+</div>
-                <div className="text-gray-light text-sm mt-1">Expert Trainers</div>
-              </div>
-              <div>
-                <div className="text-4xl font-heading font-bold text-primary">15+</div>
-                <div className="text-gray-light text-sm mt-1">Years Experience</div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[
+                { icon: Users, number: '10,000+', label: 'Active Members', color: 'from-blue-500 to-cyan-500' },
+                { icon: Award, number: '50+', label: 'Expert Trainers', color: 'from-purple-500 to-pink-500' },
+                { icon: TrendingUp, number: '15+', label: 'Years Experience', color: 'from-orange-500 to-red-500' }
+              ].map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-primary/30 transition-all duration-300 group"
+                  whileHover={{ y: -4 }}
+                >
+                  <motion.div
+                    variants={iconBounce}
+                    initial="rest"
+                    whileHover="hover"
+                  >
+                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} p-2.5 mb-4`}>
+                      <stat.icon className="w-full h-full text-white" />
+                    </div>
+                  </motion.div>
+                  <div className="text-4xl font-heading font-bold text-primary mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-gray-light text-sm">{stat.label}</div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </motion.div>
