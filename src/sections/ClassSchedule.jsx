@@ -259,10 +259,19 @@ export default function ClassSchedule() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${activeDay}-${activeFilter}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.05,
+                    when: "beforeChildren"
+                  }
+                }
+              }}
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
             >
               {filteredClasses.length > 0 ? (
@@ -270,12 +279,15 @@ export default function ClassSchedule() {
                   <ClassCard key={`${classItem.day}-${classItem.time}-${classItem.name}`} classItem={classItem} index={idx} />
                 ))
               ) : (
-                <div className="col-span-full py-16 text-center">
+                <motion.div
+                  className="col-span-full py-16 text-center"
+                  variants={fadeUp}
+                >
                   <Clock className="w-12 h-12 text-white/10 mx-auto mb-4" />
                   <p className="text-white/30 font-mono text-sm">
                     No classes match your filter
                   </p>
-                </div>
+                </motion.div>
               )}
             </motion.div>
           </AnimatePresence>
