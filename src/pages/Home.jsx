@@ -9,6 +9,7 @@ import StatsSection from '../sections/StatsSection';
 import BMICalculator from '../sections/BMICalculator';
 import MuscleExplorer from '../sections/MuscleExplorer';
 import WorkoutGenerator from '../sections/WorkoutGenerator';
+import CalorieBurnVisualizer from '../sections/CalorieBurnVisualizer';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -29,6 +30,7 @@ const sections = [
   { Component: BMICalculator, zIndex: 45, sticky: false },
   { Component: MuscleExplorer, zIndex: 47, sticky: false },
   { Component: WorkoutGenerator, zIndex: 48, sticky: false },
+  { Component: CalorieBurnVisualizer, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
