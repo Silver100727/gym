@@ -7,6 +7,7 @@ import ClassSchedule from '../sections/ClassSchedule';
 import FeaturesSection from '../sections/FeaturesSection';
 import StatsSection from '../sections/StatsSection';
 import BMICalculator from '../sections/BMICalculator';
+import MuscleExplorer from '../sections/MuscleExplorer';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -25,6 +26,7 @@ const sections = [
   { Component: FeaturesSection, zIndex: 30, sticky: false },
   { Component: StatsSection, zIndex: 40, sticky: false },
   { Component: BMICalculator, zIndex: 45, sticky: false },
+  { Component: MuscleExplorer, zIndex: 47, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
