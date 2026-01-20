@@ -33,6 +33,10 @@ import RepTempoCalculator from '../sections/RepTempoCalculator';
 import WorkoutVolumeCalculator from '../sections/WorkoutVolumeCalculator';
 import SupplementTimingGuide from '../sections/SupplementTimingGuide';
 import GripStrengthGuide from '../sections/GripStrengthGuide';
+import RPECalculator from '../sections/RPECalculator';
+import FitnessUnitConverter from '../sections/FitnessUnitConverter';
+import MotivationGenerator from '../sections/MotivationGenerator';
+import TDEECalculator from '../sections/TDEECalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -77,6 +81,10 @@ const sections = [
   { Component: WorkoutVolumeCalculator, zIndex: 49, sticky: false },
   { Component: SupplementTimingGuide, zIndex: 49, sticky: false },
   { Component: GripStrengthGuide, zIndex: 49, sticky: false },
+  { Component: RPECalculator, zIndex: 49, sticky: false },
+  { Component: FitnessUnitConverter, zIndex: 49, sticky: false },
+  { Component: MotivationGenerator, zIndex: 49, sticky: false },
+  { Component: TDEECalculator, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
