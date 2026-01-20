@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import PageLayout from '../layouts/PageLayout';
 import Hero from '../sections/Hero';
+import CountdownTimer from '../sections/CountdownTimer';
 import ProgramsSection from '../sections/ProgramsSection';
+import ClassSchedule from '../sections/ClassSchedule';
 import FeaturesSection from '../sections/FeaturesSection';
 import StatsSection from '../sections/StatsSection';
+import BMICalculator from '../sections/BMICalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -16,9 +19,12 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 // Section stacking configuration for parallax overlay effect
 const sections = [
   { Component: Hero, zIndex: 10, sticky: false },
+  { Component: CountdownTimer, zIndex: 15, sticky: false },
   { Component: ProgramsSection, zIndex: 20, sticky: false },
+  { Component: ClassSchedule, zIndex: 25, sticky: false },
   { Component: FeaturesSection, zIndex: 30, sticky: false },
   { Component: StatsSection, zIndex: 40, sticky: false },
+  { Component: BMICalculator, zIndex: 45, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
