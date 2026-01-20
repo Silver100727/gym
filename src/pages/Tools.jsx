@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageLayout from '../layouts/PageLayout';
 import { Button } from '@/components/ui/button';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import {
   Calculator,
   Activity,
@@ -262,6 +263,7 @@ function ToolCard({ tool, accent, onClick, index }) {
 }
 
 export default function Tools() {
+  useSmoothScroll({ duration: 1.4 });
   const prefersReducedMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTool, setSelectedTool] = useState(null);

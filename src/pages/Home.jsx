@@ -15,6 +15,7 @@ import FAQSection from "../sections/FAQSection";
 import CTASection from "../sections/CTASection";
 import { sectionReveal } from "../animations/variants";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 const sections = [
   { Component: Hero, zIndex: 10, sticky: false },
@@ -34,6 +35,7 @@ const sections = [
 
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
+  useSmoothScroll({ duration: 1.4 });
 
   return (
     <PageLayout>

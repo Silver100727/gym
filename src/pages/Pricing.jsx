@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { cn } from '@/lib/utils';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const plans = [
   {
@@ -64,6 +65,8 @@ const plans = [
 ];
 
 export default function Pricing() {
+  useSmoothScroll({ duration: 1.4 });
+
   return (
     <PageLayout>
       {/* Hero Section */}

@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { fadeUp, fadeLeft, fadeRight, staggerContainer } from '../animations/variants';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const contactInfo = [
   {
@@ -39,6 +40,7 @@ const contactInfo = [
 ];
 
 export default function Contact() {
+  useSmoothScroll({ duration: 1.4 });
   const [formData, setFormData] = useState({
     name: '',
     email: '',

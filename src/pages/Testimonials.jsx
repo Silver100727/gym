@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import PageLayout from '../layouts/PageLayout';
 import { fadeUp, staggerContainer } from '../animations/variants';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const testimonials = [
   {
@@ -71,6 +72,7 @@ function StarRating({ rating }) {
 }
 
 export default function Testimonials() {
+  useSmoothScroll({ duration: 1.4 });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 

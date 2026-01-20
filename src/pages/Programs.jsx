@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PageLayout from '../layouts/PageLayout';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { Button } from '@/components/ui/button';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const programs = [
   {
@@ -57,6 +58,8 @@ const programs = [
 ];
 
 export default function Programs() {
+  useSmoothScroll({ duration: 1.4 });
+
   return (
     <PageLayout>
       {/* Hero Section - Minimal */}

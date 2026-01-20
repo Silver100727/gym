@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Instagram, Twitter, Linkedin, Award } from 'lucide-react';
 import PageLayout from '../layouts/PageLayout';
 import { fadeUp, staggerContainer, imageHover } from '../animations/variants';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const trainers = [
   {
@@ -55,6 +56,8 @@ const trainers = [
 ];
 
 export default function Trainers() {
+  useSmoothScroll({ duration: 1.4 });
+
   return (
     <PageLayout>
       {/* Hero Section */}
