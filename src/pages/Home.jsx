@@ -12,6 +12,7 @@ import WorkoutGenerator from '../sections/WorkoutGenerator';
 import CalorieBurnVisualizer from '../sections/CalorieBurnVisualizer';
 import WaterIntakeTracker from '../sections/WaterIntakeTracker';
 import FitnessQuiz from '../sections/FitnessQuiz';
+import MacroCalculator from '../sections/MacroCalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -35,6 +36,7 @@ const sections = [
   { Component: CalorieBurnVisualizer, zIndex: 49, sticky: false },
   { Component: WaterIntakeTracker, zIndex: 49, sticky: false },
   { Component: FitnessQuiz, zIndex: 49, sticky: false },
+  { Component: MacroCalculator, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
