@@ -20,6 +20,7 @@ import StretchingRoutine from '../sections/StretchingRoutine';
 import ProgressComparison from '../sections/ProgressComparison';
 import GymBagChecklist from '../sections/GymBagChecklist';
 import RestTimer from '../sections/RestTimer';
+import PlateCalculator from '../sections/PlateCalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -51,6 +52,7 @@ const sections = [
   { Component: ProgressComparison, zIndex: 49, sticky: false },
   { Component: GymBagChecklist, zIndex: 49, sticky: false },
   { Component: RestTimer, zIndex: 49, sticky: false },
+  { Component: PlateCalculator, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
