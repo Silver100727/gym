@@ -48,6 +48,10 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  // Replace with your Web3Forms access key from https://web3forms.com
+  const WEB3FORMS_ACCESS_KEY = '264c6827-44ce-4691-ad36-a4e9285f678f';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,16 +61,40 @@ export default function Contact() {
     setFormData({ ...formData, subject: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        setError(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      setError('Failed to send message. Please try again later.');
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 1500);
+    }
   };
 
   return (
@@ -222,6 +250,12 @@ export default function Contact() {
                       placeholder="How can we help you?"
                     />
                   </div>
+
+                  {error && (
+                    <div className="p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-400">
+                      {error}
+                    </div>
+                  )}
 
                   <Button type="submit" size="lg" disabled={isSubmitting}>
                     {isSubmitting ? (
