@@ -17,6 +17,7 @@ import HeartRateZones from '../sections/HeartRateZones';
 import OneRepMaxCalculator from '../sections/OneRepMaxCalculator';
 import BodyFatEstimator from '../sections/BodyFatEstimator';
 import StretchingRoutine from '../sections/StretchingRoutine';
+import ProgressComparison from '../sections/ProgressComparison';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -45,6 +46,7 @@ const sections = [
   { Component: OneRepMaxCalculator, zIndex: 49, sticky: false },
   { Component: BodyFatEstimator, zIndex: 49, sticky: false },
   { Component: StretchingRoutine, zIndex: 49, sticky: false },
+  { Component: ProgressComparison, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
