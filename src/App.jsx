@@ -8,6 +8,7 @@ import Trainers from './pages/Trainers';
 import Pricing from './pages/Pricing';
 import Testimonials from './pages/Testimonials';
 import Contact from './pages/Contact';
+import Tools from './pages/Tools';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/tools" element={<Tools />} />
         </Routes>
       </AnimatePresence>
       <Footer />

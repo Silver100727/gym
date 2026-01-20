@@ -1,65 +1,21 @@
-import { motion } from 'framer-motion';
-import PageLayout from '../layouts/PageLayout';
-import Hero from '../sections/Hero';
-import CountdownTimer from '../sections/CountdownTimer';
-import ProgramsSection from '../sections/ProgramsSection';
-import ClassSchedule from '../sections/ClassSchedule';
-import FeaturesSection from '../sections/FeaturesSection';
-import StatsSection from '../sections/StatsSection';
-import BMICalculator from '../sections/BMICalculator';
-import MuscleExplorer from '../sections/MuscleExplorer';
-import WorkoutGenerator from '../sections/WorkoutGenerator';
-import CalorieBurnVisualizer from '../sections/CalorieBurnVisualizer';
-import WaterIntakeTracker from '../sections/WaterIntakeTracker';
-import FitnessQuiz from '../sections/FitnessQuiz';
-import MacroCalculator from '../sections/MacroCalculator';
-import HeartRateZones from '../sections/HeartRateZones';
-import OneRepMaxCalculator from '../sections/OneRepMaxCalculator';
-import BodyFatEstimator from '../sections/BodyFatEstimator';
-import StretchingRoutine from '../sections/StretchingRoutine';
-import ProgressComparison from '../sections/ProgressComparison';
-import GymBagChecklist from '../sections/GymBagChecklist';
-import RestTimer from '../sections/RestTimer';
-import PlateCalculator from '../sections/PlateCalculator';
-import SleepCalculator from '../sections/SleepCalculator';
-import WorkoutBPM from '../sections/WorkoutBPM';
-import ExerciseSubstitutions from '../sections/ExerciseSubstitutions';
-import BreathingExercises from '../sections/BreathingExercises';
-import WorkoutSplitPlanner from '../sections/WorkoutSplitPlanner';
-import RunningPaceCalculator from '../sections/RunningPaceCalculator';
-import MuscleRecoveryTracker from '../sections/MuscleRecoveryTracker';
-import FitnessChallengeGenerator from '../sections/FitnessChallengeGenerator';
-import RepTempoCalculator from '../sections/RepTempoCalculator';
-import WorkoutVolumeCalculator from '../sections/WorkoutVolumeCalculator';
-import SupplementTimingGuide from '../sections/SupplementTimingGuide';
-import GripStrengthGuide from '../sections/GripStrengthGuide';
-import RPECalculator from '../sections/RPECalculator';
-import FitnessUnitConverter from '../sections/FitnessUnitConverter';
-import MotivationGenerator from '../sections/MotivationGenerator';
-import TDEECalculator from '../sections/TDEECalculator';
-import IdealWeightCalculator from '../sections/IdealWeightCalculator';
-import FitnessAgeCalculator from '../sections/FitnessAgeCalculator';
-import BodyMeasurementsTracker from '../sections/BodyMeasurementsTracker';
-import PersonalRecordsTracker from '../sections/PersonalRecordsTracker';
-import TabataTimer from '../sections/TabataTimer';
-import WarmupGenerator from '../sections/WarmupGenerator';
-import CooldownRoutine from '../sections/CooldownRoutine';
-import MealPrepPlanner from '../sections/MealPrepPlanner';
-import WorkoutLog from '../sections/WorkoutLog';
-import FitnessGoalSetter from '../sections/FitnessGoalSetter';
-import ExerciseFormGuide from '../sections/ExerciseFormGuide';
-import GymEtiquetteTips from '../sections/GymEtiquetteTips';
-import HomeGymGuide from '../sections/HomeGymGuide';
-import TrainersPreview from '../sections/TrainersPreview';
-import TestimonialsSection from '../sections/TestimonialsSection';
-import TransformationGallery from '../sections/TransformationGallery';
-import MembershipBenefits from '../sections/MembershipBenefits';
-import FAQSection from '../sections/FAQSection';
-import CTASection from '../sections/CTASection';
-import { sectionReveal } from '../animations/variants';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { motion } from "framer-motion";
+import PageLayout from "../layouts/PageLayout";
+import Hero from "../sections/Hero";
+import CountdownTimer from "../sections/CountdownTimer";
+import ProgramsSection from "../sections/ProgramsSection";
+import ClassSchedule from "../sections/ClassSchedule";
+import FeaturesSection from "../sections/FeaturesSection";
+import StatsSection from "../sections/StatsSection";
+import BMICalculator from "../sections/BMICalculator";
+import TrainersPreview from "../sections/TrainersPreview";
+import TestimonialsSection from "../sections/TestimonialsSection";
+import TransformationGallery from "../sections/TransformationGallery";
+import MembershipBenefits from "../sections/MembershipBenefits";
+import FAQSection from "../sections/FAQSection";
+import CTASection from "../sections/CTASection";
+import { sectionReveal } from "../animations/variants";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
-// Section stacking configuration for parallax overlay effect
 const sections = [
   { Component: Hero, zIndex: 10, sticky: false },
   { Component: CountdownTimer, zIndex: 15, sticky: false },
@@ -68,49 +24,6 @@ const sections = [
   { Component: FeaturesSection, zIndex: 30, sticky: false },
   { Component: StatsSection, zIndex: 40, sticky: false },
   { Component: BMICalculator, zIndex: 45, sticky: false },
-  { Component: MuscleExplorer, zIndex: 47, sticky: false },
-  { Component: WorkoutGenerator, zIndex: 48, sticky: false },
-  { Component: CalorieBurnVisualizer, zIndex: 49, sticky: false },
-  { Component: WaterIntakeTracker, zIndex: 49, sticky: false },
-  { Component: FitnessQuiz, zIndex: 49, sticky: false },
-  { Component: MacroCalculator, zIndex: 49, sticky: false },
-  { Component: HeartRateZones, zIndex: 49, sticky: false },
-  { Component: OneRepMaxCalculator, zIndex: 49, sticky: false },
-  { Component: BodyFatEstimator, zIndex: 49, sticky: false },
-  { Component: StretchingRoutine, zIndex: 49, sticky: false },
-  { Component: ProgressComparison, zIndex: 49, sticky: false },
-  { Component: GymBagChecklist, zIndex: 49, sticky: false },
-  { Component: RestTimer, zIndex: 49, sticky: false },
-  { Component: PlateCalculator, zIndex: 49, sticky: false },
-  { Component: SleepCalculator, zIndex: 49, sticky: false },
-  { Component: WorkoutBPM, zIndex: 49, sticky: false },
-  { Component: ExerciseSubstitutions, zIndex: 49, sticky: false },
-  { Component: BreathingExercises, zIndex: 49, sticky: false },
-  { Component: WorkoutSplitPlanner, zIndex: 49, sticky: false },
-  { Component: RunningPaceCalculator, zIndex: 49, sticky: false },
-  { Component: MuscleRecoveryTracker, zIndex: 49, sticky: false },
-  { Component: FitnessChallengeGenerator, zIndex: 49, sticky: false },
-  { Component: RepTempoCalculator, zIndex: 49, sticky: false },
-  { Component: WorkoutVolumeCalculator, zIndex: 49, sticky: false },
-  { Component: SupplementTimingGuide, zIndex: 49, sticky: false },
-  { Component: GripStrengthGuide, zIndex: 49, sticky: false },
-  { Component: RPECalculator, zIndex: 49, sticky: false },
-  { Component: FitnessUnitConverter, zIndex: 49, sticky: false },
-  { Component: MotivationGenerator, zIndex: 49, sticky: false },
-  { Component: TDEECalculator, zIndex: 49, sticky: false },
-  { Component: IdealWeightCalculator, zIndex: 49, sticky: false },
-  { Component: FitnessAgeCalculator, zIndex: 49, sticky: false },
-  { Component: BodyMeasurementsTracker, zIndex: 49, sticky: false },
-  { Component: PersonalRecordsTracker, zIndex: 49, sticky: false },
-  { Component: TabataTimer, zIndex: 49, sticky: false },
-  { Component: WarmupGenerator, zIndex: 49, sticky: false },
-  { Component: CooldownRoutine, zIndex: 49, sticky: false },
-  { Component: MealPrepPlanner, zIndex: 49, sticky: false },
-  { Component: WorkoutLog, zIndex: 49, sticky: false },
-  { Component: FitnessGoalSetter, zIndex: 49, sticky: false },
-  { Component: ExerciseFormGuide, zIndex: 49, sticky: false },
-  { Component: GymEtiquetteTips, zIndex: 49, sticky: false },
-  { Component: HomeGymGuide, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
@@ -128,7 +41,7 @@ export default function Home() {
         {sections.map(({ Component, zIndex, sticky }, idx) => (
           <motion.div
             key={idx}
-            className={sticky ? 'sticky top-20' : 'relative'}
+            className={sticky ? "sticky top-20" : "relative"}
             style={{ zIndex }}
             variants={prefersReducedMotion ? undefined : sectionReveal}
             initial={prefersReducedMotion ? undefined : "hidden"}
