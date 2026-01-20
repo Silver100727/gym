@@ -14,6 +14,7 @@ import WaterIntakeTracker from '../sections/WaterIntakeTracker';
 import FitnessQuiz from '../sections/FitnessQuiz';
 import MacroCalculator from '../sections/MacroCalculator';
 import HeartRateZones from '../sections/HeartRateZones';
+import OneRepMaxCalculator from '../sections/OneRepMaxCalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -39,6 +40,7 @@ const sections = [
   { Component: FitnessQuiz, zIndex: 49, sticky: false },
   { Component: MacroCalculator, zIndex: 49, sticky: false },
   { Component: HeartRateZones, zIndex: 49, sticky: false },
+  { Component: OneRepMaxCalculator, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
