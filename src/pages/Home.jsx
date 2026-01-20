@@ -37,6 +37,19 @@ import RPECalculator from '../sections/RPECalculator';
 import FitnessUnitConverter from '../sections/FitnessUnitConverter';
 import MotivationGenerator from '../sections/MotivationGenerator';
 import TDEECalculator from '../sections/TDEECalculator';
+import IdealWeightCalculator from '../sections/IdealWeightCalculator';
+import FitnessAgeCalculator from '../sections/FitnessAgeCalculator';
+import BodyMeasurementsTracker from '../sections/BodyMeasurementsTracker';
+import PersonalRecordsTracker from '../sections/PersonalRecordsTracker';
+import TabataTimer from '../sections/TabataTimer';
+import WarmupGenerator from '../sections/WarmupGenerator';
+import CooldownRoutine from '../sections/CooldownRoutine';
+import MealPrepPlanner from '../sections/MealPrepPlanner';
+import WorkoutLog from '../sections/WorkoutLog';
+import FitnessGoalSetter from '../sections/FitnessGoalSetter';
+import ExerciseFormGuide from '../sections/ExerciseFormGuide';
+import GymEtiquetteTips from '../sections/GymEtiquetteTips';
+import HomeGymGuide from '../sections/HomeGymGuide';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -85,6 +98,19 @@ const sections = [
   { Component: FitnessUnitConverter, zIndex: 49, sticky: false },
   { Component: MotivationGenerator, zIndex: 49, sticky: false },
   { Component: TDEECalculator, zIndex: 49, sticky: false },
+  { Component: IdealWeightCalculator, zIndex: 49, sticky: false },
+  { Component: FitnessAgeCalculator, zIndex: 49, sticky: false },
+  { Component: BodyMeasurementsTracker, zIndex: 49, sticky: false },
+  { Component: PersonalRecordsTracker, zIndex: 49, sticky: false },
+  { Component: TabataTimer, zIndex: 49, sticky: false },
+  { Component: WarmupGenerator, zIndex: 49, sticky: false },
+  { Component: CooldownRoutine, zIndex: 49, sticky: false },
+  { Component: MealPrepPlanner, zIndex: 49, sticky: false },
+  { Component: WorkoutLog, zIndex: 49, sticky: false },
+  { Component: FitnessGoalSetter, zIndex: 49, sticky: false },
+  { Component: ExerciseFormGuide, zIndex: 49, sticky: false },
+  { Component: GymEtiquetteTips, zIndex: 49, sticky: false },
+  { Component: HomeGymGuide, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
