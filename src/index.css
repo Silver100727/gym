@@ -37,26 +37,50 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-/* Custom scrollbar */
+/* Hide scrollbar but allow scrolling */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-dark);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-gray);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Selection */
 ::selection {
   background-color: var(--color-primary);
   color: white;
+}
+
+/* Parallax performance optimizations */
+.parallax-layer {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.parallax-bg {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* GPU acceleration hints */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .parallax-layer,
+  .parallax-bg,
+  .gpu-accelerated {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }

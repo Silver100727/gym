@@ -1,9 +1,11 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { Check, X } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const benefits = [
   { feature: '24/7 Gym Access', member: true, nonMember: false },
@@ -17,8 +19,30 @@ const benefits = [
 ];
 
 export default function MembershipBenefits() {
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Card scales up as it enters view
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    prefersReducedMotion ? [1, 1, 1, 1] : [0.95, 1, 1, 0.95]
+  );
+
+  // Header parallax
+  const headerY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [20, -20]
+  );
+
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-dark-light">
+    <section ref={sectionRef} className="py-16 sm:py-20 lg:py-24 bg-dark-light">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -27,6 +51,7 @@ export default function MembershipBenefits() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
+          style={{ y: headerY }}
         >
           <motion.span
             className="text-primary text-sm font-semibold uppercase tracking-wider"
@@ -42,12 +67,16 @@ export default function MembershipBenefits() {
           </motion.h2>
         </motion.div>
 
-        {/* Comparison Table */}
+        {/* Comparison Table with Scale Effect */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
+          style={{
+            scale,
+            willChange: prefersReducedMotion ? 'auto' : 'transform'
+          }}
         >
           <Card>
             <CardContent className="p-6">

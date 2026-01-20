@@ -1,25 +1,66 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { Button } from '@/components/ui/button';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 export default function CTASection() {
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Background parallax - moves slower
+  const backgroundY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? ['0%', '0%'] : ['0%', '40%']
+  );
+
+  // Content parallax - moves opposite for depth
+  const contentYValue = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [50, -30]
+  );
+  const contentY = useSpring(contentYValue, { stiffness: 100, damping: 30 });
+
+  // Trust badges float at different speed
+  const badgesY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [30, -50]
+  );
+
   return (
-    <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
+    <section
+      ref={sectionRef}
+      className="py-16 sm:py-20 lg:py-24 relative overflow-hidden"
+    >
+      {/* Background with Parallax */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ y: backgroundY, willChange: prefersReducedMotion ? 'auto' : 'transform' }}
+      >
         <img
           src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920&q=80"
           alt="Gym workout"
-          className="w-full h-full object-cover"
+          className="w-full h-[130%] object-cover"
         />
         <div className="absolute inset-0 bg-dark/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent" />
-      </div>
+      </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Content with Parallax */}
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ y: contentY, willChange: prefersReducedMotion ? 'auto' : 'transform' }}
+      >
         <motion.div
           className="max-w-3xl mx-auto text-center"
           variants={staggerContainer}
@@ -65,10 +106,11 @@ export default function CTASection() {
             </Link>
           </motion.div>
 
-          {/* Trust Badges */}
+          {/* Trust Badges with separate parallax */}
           <motion.div
             className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10"
             variants={fadeUp}
+            style={{ y: badgesY }}
           >
             <div className="text-center">
               <div className="text-2xl font-heading font-bold text-white">24/7</div>
@@ -88,7 +130,7 @@ export default function CTASection() {
             </div>
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

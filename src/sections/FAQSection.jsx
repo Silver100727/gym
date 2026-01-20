@@ -1,7 +1,8 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useState, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { fadeUp, staggerContainer, accordion } from '../animations/variants';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const faqs = [
   {
@@ -70,16 +71,32 @@ function FAQItem({ faq }) {
 }
 
 export default function FAQSection() {
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Header parallax
+  const headerY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [25, -25]
+  );
+
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-dark-lighter">
+    <section ref={sectionRef} className="py-16 sm:py-20 lg:py-24 bg-dark-lighter">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {/* Header with Parallax */}
         <motion.div
           className="text-center mb-16"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
+          style={{ y: headerY }}
         >
           <motion.span
             className="text-primary text-sm font-semibold uppercase tracking-wider"

@@ -1,8 +1,10 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef } from 'react';
 import { Star } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const testimonials = [
   {
@@ -39,9 +41,85 @@ const testimonials = [
   }
 ];
 
-export default function TestimonialsSection() {
+function TestimonialCard({ testimonial, index }) {
+  const ref = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  // Left column floats up, right column floats down
+  const isLeftColumn = index % 2 === 0;
+  const speed = isLeftColumn ? 25 : -25;
+
+  const yValue = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [speed, -speed]
+  );
+  const y = useSpring(yValue, { stiffness: 100, damping: 30 });
+
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-dark-lighter">
+    <motion.div
+      ref={ref}
+      variants={fadeUp}
+      style={{ y }}
+    >
+      <Card className="h-full hover:border-primary/30 transition-all duration-300">
+        <CardContent className="p-6">
+          {/* Rating */}
+          <div className="flex gap-1 mb-4">
+            {Array.from({ length: testimonial.rating }).map((_, i) => (
+              <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+            ))}
+          </div>
+
+          {/* Quote */}
+          <p className="text-gray-light mb-6 text-lg leading-relaxed">
+            "{testimonial.quote}"
+          </p>
+
+          {/* Profile */}
+          <div className="flex items-center gap-4">
+            <img
+              src={testimonial.image}
+              alt={testimonial.name}
+              className="w-14 h-14 rounded-full object-cover border-2 border-primary/30"
+            />
+            <div className="flex-1">
+              <h4 className="text-white font-semibold">{testimonial.name}</h4>
+              <p className="text-sm text-gray-light">{testimonial.role}</p>
+            </div>
+            <Badge className="bg-primary/20 text-primary border-primary/30">
+              {testimonial.achievement}
+            </Badge>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}
+
+export default function TestimonialsSection() {
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Header parallax
+  const headerY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [20, -20]
+  );
+
+  return (
+    <section ref={sectionRef} className="py-16 sm:py-20 lg:py-24 bg-dark-lighter">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -50,6 +128,7 @@ export default function TestimonialsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
+          style={{ y: headerY }}
         >
           <motion.span
             className="text-primary text-sm font-semibold uppercase tracking-wider"
@@ -79,40 +158,8 @@ export default function TestimonialsSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {testimonials.map((testimonial) => (
-            <motion.div key={testimonial.name} variants={fadeUp}>
-              <Card className="h-full hover:border-primary/30 transition-all duration-300">
-                <CardContent className="p-6">
-                  {/* Rating */}
-                  <div className="flex gap-1 mb-4">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-gray-light mb-6 text-lg leading-relaxed">
-                    "{testimonial.quote}"
-                  </p>
-
-                  {/* Profile */}
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-primary/30"
-                    />
-                    <div className="flex-1">
-                      <h4 className="text-white font-semibold">{testimonial.name}</h4>
-                      <p className="text-sm text-gray-light">{testimonial.role}</p>
-                    </div>
-                    <Badge className="bg-primary/20 text-primary border-primary/30">
-                      {testimonial.achievement}
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard key={testimonial.name} testimonial={testimonial} index={index} />
           ))}
         </motion.div>
       </div>

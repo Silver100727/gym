@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import PageLayout from '../layouts/PageLayout';
 import Hero from '../sections/Hero';
 import ProgramsSection from '../sections/ProgramsSection';
@@ -9,20 +10,43 @@ import TransformationGallery from '../sections/TransformationGallery';
 import MembershipBenefits from '../sections/MembershipBenefits';
 import FAQSection from '../sections/FAQSection';
 import CTASection from '../sections/CTASection';
+import { sectionReveal } from '../animations/variants';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+
+// Section stacking configuration for parallax overlay effect
+const sections = [
+  { Component: Hero, zIndex: 10, sticky: false },
+  { Component: ProgramsSection, zIndex: 20, sticky: false },
+  { Component: FeaturesSection, zIndex: 30, sticky: false },
+  { Component: StatsSection, zIndex: 40, sticky: false },
+  { Component: TrainersPreview, zIndex: 50, sticky: false },
+  { Component: TestimonialsSection, zIndex: 60, sticky: false },
+  { Component: TransformationGallery, zIndex: 70, sticky: false },
+  { Component: MembershipBenefits, zIndex: 80, sticky: false },
+  { Component: FAQSection, zIndex: 90, sticky: false },
+  { Component: CTASection, zIndex: 100, sticky: false },
+];
 
 export default function Home() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <PageLayout>
-      <Hero />
-      <ProgramsSection />
-      <FeaturesSection />
-      <StatsSection />
-      <TrainersPreview />
-      <TestimonialsSection />
-      <TransformationGallery />
-      <MembershipBenefits />
-      <FAQSection />
-      <CTASection />
+      <div className="relative">
+        {sections.map(({ Component, zIndex, sticky }, idx) => (
+          <motion.div
+            key={idx}
+            className={sticky ? 'sticky top-20' : 'relative'}
+            style={{ zIndex }}
+            variants={prefersReducedMotion ? undefined : sectionReveal}
+            initial={prefersReducedMotion ? undefined : "hidden"}
+            whileInView={prefersReducedMotion ? undefined : "visible"}
+            viewport={{ once: false, amount: 0.1 }}
+          >
+            <Component />
+          </motion.div>
+        ))}
+      </div>
     </PageLayout>
   );
 }

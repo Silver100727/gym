@@ -273,3 +273,64 @@ export const accordion = {
     }
   }
 };
+
+// Parallax section reveal - for stacking effect
+export const sectionReveal = {
+  hidden: {
+    opacity: 0,
+    y: 100,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.25, 0.1, 0.25, 1],
+    }
+  }
+};
+
+// Floating element variants with different speeds
+export const floatSlow = {
+  animate: {
+    y: [-10, 10],
+    transition: {
+      y: {
+        duration: 4,
+        repeat: Infinity,
+        repeatType: 'reverse',
+        ease: 'easeInOut'
+      }
+    }
+  }
+};
+
+export const floatMedium = {
+  animate: {
+    y: [-20, 20],
+    transition: {
+      y: {
+        duration: 3,
+        repeat: Infinity,
+        repeatType: 'reverse',
+        ease: 'easeInOut'
+      }
+    }
+  }
+};
+
+export const floatFast = {
+  animate: {
+    y: [-30, 30],
+    transition: {
+      y: {
+        duration: 2,
+        repeat: Infinity,
+        repeatType: 'reverse',
+        ease: 'easeInOut'
+      }
+    }
+  }
+};

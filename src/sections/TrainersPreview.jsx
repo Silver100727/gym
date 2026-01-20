@@ -1,8 +1,10 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Twitter, ArrowRight } from 'lucide-react';
 import { fadeUp, staggerContainer, imageHover } from '../animations/variants';
 import { Badge } from '@/components/ui/badge';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const trainers = [
   {
@@ -37,9 +39,109 @@ const trainers = [
   },
 ];
 
-export default function TrainersPreview() {
+function TrainerCard({ trainer, index }) {
+  const ref = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  // Outer cards move more, middle card moves less for depth effect
+  const parallaxSpeeds = [40, 20, 40];
+  const speed = parallaxSpeeds[index % parallaxSpeeds.length];
+
+  const yValue = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [speed, -speed]
+  );
+  const y = useSpring(yValue, { stiffness: 100, damping: 30 });
+
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-dark">
+    <motion.div
+      ref={ref}
+      className="group relative overflow-hidden rounded-lg"
+      variants={fadeUp}
+      style={{ y }}
+    >
+      {/* Image */}
+      <motion.div
+        className="aspect-[4/5] overflow-hidden"
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+      >
+        <motion.img
+          src={trainer.image}
+          alt={trainer.name}
+          className="w-full h-full object-cover"
+          variants={imageHover}
+        />
+      </motion.div>
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity" />
+
+      {/* Expertise Badges */}
+      <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+        <Badge className="bg-dark/80 backdrop-blur-sm border-primary/30">
+          ⭐ {trainer.rating}
+        </Badge>
+        <Badge variant="secondary" className="bg-dark/80 backdrop-blur-sm">
+          {trainer.experience}
+        </Badge>
+      </div>
+
+      {/* Content at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <h3 className="text-2xl font-heading font-bold text-white mb-1">
+          {trainer.name}
+        </h3>
+        <p className="text-primary mb-2">{trainer.specialty}</p>
+        <p className="text-sm text-gray-light mb-4">{trainer.clients} Clients</p>
+
+        {/* Social Links */}
+        <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+          <a
+            href={trainer.instagram}
+            className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-primary transition-colors duration-300"
+            aria-label={`${trainer.name} Instagram`}
+          >
+            <Instagram className="w-4 h-4" />
+          </a>
+          <a
+            href={trainer.twitter}
+            className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-primary transition-colors duration-300"
+            aria-label={`${trainer.name} Twitter`}
+          >
+            <Twitter className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function TrainersPreview() {
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Header parallax
+  const headerY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [30, -30]
+  );
+
+  return (
+    <section ref={sectionRef} className="py-16 sm:py-20 lg:py-24 bg-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16"
@@ -47,6 +149,7 @@ export default function TrainersPreview() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
+          style={{ y: headerY }}
         >
           <div>
             <motion.span
@@ -87,67 +190,8 @@ export default function TrainersPreview() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {trainers.map((trainer) => (
-            <motion.div
-              key={trainer.name}
-              className="group relative overflow-hidden rounded-lg"
-              variants={fadeUp}
-            >
-              {/* Image */}
-              <motion.div
-                className="aspect-[4/5] overflow-hidden"
-                initial="rest"
-                whileHover="hover"
-                animate="rest"
-              >
-                <motion.img
-                  src={trainer.image}
-                  alt={trainer.name}
-                  className="w-full h-full object-cover"
-                  variants={imageHover}
-                />
-              </motion.div>
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity" />
-
-              {/* Expertise Badges */}
-              <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                <Badge className="bg-dark/80 backdrop-blur-sm border-primary/30">
-                  ⭐ {trainer.rating}
-                </Badge>
-                <Badge variant="secondary" className="bg-dark/80 backdrop-blur-sm">
-                  {trainer.experience}
-                </Badge>
-              </div>
-
-              {/* Content at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-2xl font-heading font-bold text-white mb-1">
-                  {trainer.name}
-                </h3>
-                <p className="text-primary mb-2">{trainer.specialty}</p>
-                <p className="text-sm text-gray-light mb-4">{trainer.clients} Clients</p>
-
-                {/* Social Links */}
-                <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                  <a
-                    href={trainer.instagram}
-                    className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-primary transition-colors duration-300"
-                    aria-label={`${trainer.name} Instagram`}
-                  >
-                    <Instagram className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={trainer.twitter}
-                    className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-primary transition-colors duration-300"
-                    aria-label={`${trainer.name} Twitter`}
-                  >
-                    <Twitter className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
+          {trainers.map((trainer, index) => (
+            <TrainerCard key={trainer.name} trainer={trainer} index={index} />
           ))}
         </motion.div>
       </div>

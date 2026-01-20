@@ -1,5 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef } from 'react';
 import { fadeUp, staggerContainer } from '../animations/variants';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const features = [
   {
@@ -46,11 +48,95 @@ const features = [
   }
 ];
 
-export default function FeaturesSection() {
+function FeatureCard({ feature, index }) {
+  const ref = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  // Alternating parallax speeds for visual interest
+  const speeds = [30, -20, 40, -30, 25, -35];
+  const speed = speeds[index % speeds.length];
+
+  const yValue = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [speed, -speed]
+  );
+  const y = useSpring(yValue, { stiffness: 100, damping: 30 });
+
   return (
-    <section className="py-20 lg:py-32 bg-dark-light relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
+    <motion.div
+      ref={ref}
+      className={`group relative overflow-hidden ${
+        feature.size === 'large' ? 'lg:col-span-2' : ''
+      }`}
+      variants={fadeUp}
+      style={{ y }}
+    >
+      <div className={`relative bg-dark border border-white/5 p-8 lg:p-10 h-full min-h-[280px] flex flex-col justify-between transition-all duration-500 group-hover:border-primary/30 ${
+        feature.size === 'large' ? 'lg:min-h-[320px]' : ''
+      }`}>
+        {/* Number watermark */}
+        <span className="absolute -top-4 -right-2 text-[120px] lg:text-[160px] font-heading font-black text-white/[0.02] leading-none select-none group-hover:text-primary/5 transition-colors duration-500">
+          {feature.number}
+        </span>
+
+        {/* Content */}
+        <div className="relative z-10">
+          <span className="font-mono text-primary/60 text-xs tracking-widest group-hover:text-primary transition-colors">
+            {feature.number}
+          </span>
+          <h3 className="text-2xl lg:text-3xl font-heading font-black text-white mt-4 group-hover:text-primary transition-colors duration-300">
+            {feature.title}
+          </h3>
+        </div>
+
+        <div className="relative z-10">
+          <p className="text-white/40 text-sm lg:text-base mb-4">
+            {feature.description}
+          </p>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-mono tracking-widest text-white/20 group-hover:text-primary/50 transition-colors">
+              {feature.highlight}
+            </span>
+            <div className="w-8 h-px bg-white/10 group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
+          </div>
+        </div>
+
+        {/* Hover accent line */}
+        <div className="absolute bottom-0 left-0 w-0 h-1 bg-primary group-hover:w-full transition-all duration-500" />
+      </div>
+    </motion.div>
+  );
+}
+
+export default function FeaturesSection() {
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Background accent parallax
+  const accentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? ['0%', '0%'] : ['-20%', '20%']
+  );
+
+  return (
+    <section ref={sectionRef} className="py-20 lg:py-32 bg-dark-light relative overflow-hidden">
+      {/* Background accent with parallax */}
+      <motion.div
+        className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"
+        style={{ y: accentY }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header - Asymmetric */}
@@ -80,7 +166,7 @@ export default function FeaturesSection() {
           </div>
         </motion.div>
 
-        {/* Bento Grid */}
+        {/* Bento Grid with Parallax Cards */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
           variants={staggerContainer}
@@ -88,48 +174,8 @@ export default function FeaturesSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {features.map((feature) => (
-            <motion.div
-              key={feature.number}
-              className={`group relative overflow-hidden ${
-                feature.size === 'large' ? 'lg:col-span-2' : ''
-              }`}
-              variants={fadeUp}
-            >
-              <div className={`relative bg-dark border border-white/5 p-8 lg:p-10 h-full min-h-[280px] flex flex-col justify-between transition-all duration-500 group-hover:border-primary/30 ${
-                feature.size === 'large' ? 'lg:min-h-[320px]' : ''
-              }`}>
-                {/* Number watermark */}
-                <span className="absolute -top-4 -right-2 text-[120px] lg:text-[160px] font-heading font-black text-white/[0.02] leading-none select-none group-hover:text-primary/5 transition-colors duration-500">
-                  {feature.number}
-                </span>
-
-                {/* Content */}
-                <div className="relative z-10">
-                  <span className="font-mono text-primary/60 text-xs tracking-widest group-hover:text-primary transition-colors">
-                    {feature.number}
-                  </span>
-                  <h3 className="text-2xl lg:text-3xl font-heading font-black text-white mt-4 group-hover:text-primary transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                </div>
-
-                <div className="relative z-10">
-                  <p className="text-white/40 text-sm lg:text-base mb-4">
-                    {feature.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono tracking-widest text-white/20 group-hover:text-primary/50 transition-colors">
-                      {feature.highlight}
-                    </span>
-                    <div className="w-8 h-px bg-white/10 group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
-                  </div>
-                </div>
-
-                {/* Hover accent line */}
-                <div className="absolute bottom-0 left-0 w-0 h-1 bg-primary group-hover:w-full transition-all duration-500" />
-              </div>
-            </motion.div>
+          {features.map((feature, index) => (
+            <FeatureCard key={feature.number} feature={feature} index={index} />
           ))}
         </motion.div>
       </div>
