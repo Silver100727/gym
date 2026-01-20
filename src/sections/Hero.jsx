@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Play, Users, Award, TrendingUp } from 'lucide-react';
-import { fadeUp, staggerContainer, floatingParticle, orbPulse, iconBounce } from '../animations/variants';
+import { fadeUp, staggerContainer, floatingParticle, orbPulse } from '../animations/variants';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 
 export default function Hero() {
   return (
@@ -112,33 +111,40 @@ export default function Hero() {
             </Button>
           </motion.div>
 
-          {/* Enhanced Stats */}
+          {/* Stats - Bold Industrial Style */}
           <motion.div variants={fadeUp} className="mt-16">
-            <Separator className="mb-8" />
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="flex flex-col sm:flex-row items-stretch">
               {[
-                { icon: Users, number: '10,000+', label: 'Active Members', color: 'from-blue-500 to-cyan-500' },
-                { icon: Award, number: '50+', label: 'Expert Trainers', color: 'from-purple-500 to-pink-500' },
-                { icon: TrendingUp, number: '15+', label: 'Years Experience', color: 'from-orange-500 to-red-500' }
+                { icon: Users, number: '10K+', label: 'ACTIVE MEMBERS' },
+                { icon: Award, number: '50+', label: 'EXPERT TRAINERS' },
+                { icon: TrendingUp, number: '15+', label: 'YEARS STRONG' }
               ].map((stat, idx) => (
                 <motion.div
                   key={idx}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-primary/30 transition-all duration-300 group"
-                  whileHover={{ y: -4 }}
+                  className="group relative flex-1 py-8 px-6 cursor-default"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400 }}
                 >
-                  <motion.div
-                    variants={iconBounce}
-                    initial="rest"
-                    whileHover="hover"
-                  >
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} p-2.5 mb-4`}>
-                      <stat.icon className="w-full h-full text-white" />
+                  {/* Left accent bar */}
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-primary transition-all duration-300 group-hover:h-full" />
+
+                  {/* Top border for all except first */}
+                  {idx > 0 && <div className="absolute left-6 right-6 top-0 h-px bg-white/10 sm:hidden" />}
+
+                  {/* Left divider for desktop */}
+                  {idx > 0 && <div className="hidden sm:block absolute left-0 top-4 bottom-4 w-px bg-white/10" />}
+
+                  <div className="flex items-center gap-4">
+                    <stat.icon className="w-6 h-6 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <div>
+                      <div className="text-5xl sm:text-6xl font-heading font-black text-white tracking-tight group-hover:text-primary transition-colors duration-300">
+                        {stat.number}
+                      </div>
+                      <div className="text-xs font-medium tracking-[0.2em] text-white/40 mt-1">
+                        {stat.label}
+                      </div>
                     </div>
-                  </motion.div>
-                  <div className="text-4xl font-heading font-bold text-primary mb-1">
-                    {stat.number}
                   </div>
-                  <div className="text-gray-light text-sm">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
