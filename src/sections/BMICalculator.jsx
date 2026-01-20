@@ -1,18 +1,43 @@
-import { useState, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Scale, Ruler, ArrowRight, RotateCcw } from 'lucide-react';
-import { fadeUp, staggerContainer } from '../animations/variants';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useState, useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import { Scale, Ruler, ArrowRight, RotateCcw } from "lucide-react";
+import { fadeUp, staggerContainer } from "../animations/variants";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const BMI_ZONES = [
-  { max: 18.5, label: 'UNDERWEIGHT', color: '#3b82f6', message: 'Time to bulk up' },
-  { max: 24.9, label: 'OPTIMAL', color: '#22c55e', message: 'Peak performance zone' },
-  { max: 29.9, label: 'OVERWEIGHT', color: '#f97316', message: 'Let\'s cut some fat' },
-  { max: 100, label: 'OBESE', color: '#ef4444', message: 'Transformation starts now' }
+  {
+    max: 18.5,
+    label: "UNDERWEIGHT",
+    color: "#3b82f6",
+    message: "Time to bulk up",
+  },
+  {
+    max: 24.9,
+    label: "OPTIMAL",
+    color: "#22c55e",
+    message: "Peak performance zone",
+  },
+  {
+    max: 29.9,
+    label: "OVERWEIGHT",
+    color: "#f97316",
+    message: "Let's cut some fat",
+  },
+  {
+    max: 100,
+    label: "OBESE",
+    color: "#ef4444",
+    message: "Transformation starts now",
+  },
 ];
 
 function getZone(bmi) {
-  return BMI_ZONES.find(z => bmi <= z.max) || BMI_ZONES[3];
+  return BMI_ZONES.find((z) => bmi <= z.max) || BMI_ZONES[3];
 }
 
 function BMIGauge({ value, isVisible }) {
@@ -23,31 +48,35 @@ function BMIGauge({ value, isVisible }) {
   return (
     <div className="relative w-64 h-32 mx-auto">
       {/* Gauge background arc */}
-      <svg viewBox="0 0 200 100" className="w-full h-full">
-        {/* Track segments */}
+      <svg viewBox="0 0 200 110" className="w-full h-full">
+        {/* Track segments - semicircle with center (100,100), radius 80 */}
+        {/* Blue: 180° to 137° */}
         <path
-          d="M 20 100 A 80 80 0 0 1 50 31"
+          d="M 20 100 A 80 80 0 0 1 46.1 41.4"
           fill="none"
           stroke="#3b82f6"
           strokeWidth="12"
           strokeLinecap="round"
         />
+        {/* Green: 133° to 92° */}
         <path
-          d="M 55 26 A 80 80 0 0 1 100 20"
+          d="M 41.3 46.1 A 80 80 0 0 1 97.2 20"
           fill="none"
           stroke="#22c55e"
           strokeWidth="12"
           strokeLinecap="round"
         />
+        {/* Orange: 88° to 47° */}
         <path
-          d="M 105 20 A 80 80 0 0 1 145 26"
+          d="M 102.8 20 A 80 80 0 0 1 158.7 46.1"
           fill="none"
           stroke="#f97316"
           strokeWidth="12"
           strokeLinecap="round"
         />
+        {/* Red: 43° to 0° */}
         <path
-          d="M 150 31 A 80 80 0 0 1 180 100"
+          d="M 153.9 41.4 A 80 80 0 0 1 180 100"
           fill="none"
           stroke="#ef4444"
           strokeWidth="12"
@@ -60,7 +89,7 @@ function BMIGauge({ value, isVisible }) {
         className="absolute bottom-0 left-1/2 origin-bottom"
         initial={{ rotate: -90 }}
         animate={{ rotate: isVisible ? rotation : -90 }}
-        transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.3 }}
+        transition={{ type: "spring", stiffness: 60, damping: 15, delay: 0.3 }}
       >
         <div className="relative -ml-0.5">
           <div className="w-1 h-20 bg-white rounded-full" />
@@ -121,7 +150,7 @@ function InputDial({ label, value, onChange, min, max, unit, icon: Icon }) {
 
   const startHold = (direction) => {
     setHoldingBtn(direction);
-    const step = direction === 'up' ? 1 : -1;
+    const step = direction === "up" ? 1 : -1;
 
     // Initial change
     onChange(Math.min(max, Math.max(min, valueRef.current + step)));
@@ -143,7 +172,9 @@ function InputDial({ label, value, onChange, min, max, unit, icon: Icon }) {
       <div
         ref={dialRef}
         className={`relative bg-dark-lighter border-2 p-6 cursor-ns-resize select-none transition-all duration-300 ${
-          isDragging ? 'border-primary scale-105' : 'border-white/10 hover:border-white/20'
+          isDragging
+            ? "border-primary scale-105"
+            : "border-white/10 hover:border-white/20"
         }`}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -158,7 +189,9 @@ function InputDial({ label, value, onChange, min, max, unit, icon: Icon }) {
         </div>
 
         <Icon className="w-5 h-5 text-primary mb-2" />
-        <span className="font-mono text-xs text-white/40 tracking-widest block">{label}</span>
+        <span className="font-mono text-xs text-white/40 tracking-widest block">
+          {label}
+        </span>
         <div className="flex items-baseline gap-1 mt-2">
           <span className="text-4xl font-heading font-black text-white tabular-nums">
             {value.toFixed(0)}
@@ -170,26 +203,32 @@ function InputDial({ label, value, onChange, min, max, unit, icon: Icon }) {
         <div className="flex gap-2 mt-4">
           <button
             type="button"
-            onPointerDown={(e) => { e.stopPropagation(); startHold('down'); }}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              startHold("down");
+            }}
             onPointerUp={stopHold}
             onPointerLeave={stopHold}
             className={`flex-1 py-2 font-mono text-sm transition-colors ${
-              holdingBtn === 'down'
-                ? 'bg-primary/30 text-primary'
-                : 'bg-white/5 hover:bg-primary/20 hover:text-primary text-white/50'
+              holdingBtn === "down"
+                ? "bg-primary/30 text-primary"
+                : "bg-white/5 hover:bg-primary/20 hover:text-primary text-white/50"
             }`}
           >
             −
           </button>
           <button
             type="button"
-            onPointerDown={(e) => { e.stopPropagation(); startHold('up'); }}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              startHold("up");
+            }}
             onPointerUp={stopHold}
             onPointerLeave={stopHold}
             className={`flex-1 py-2 font-mono text-sm transition-colors ${
-              holdingBtn === 'up'
-                ? 'bg-primary/30 text-primary'
-                : 'bg-white/5 hover:bg-primary/20 hover:text-primary text-white/50'
+              holdingBtn === "up"
+                ? "bg-primary/30 text-primary"
+                : "bg-white/5 hover:bg-primary/20 hover:text-primary text-white/50"
             }`}
           >
             +
@@ -198,9 +237,11 @@ function InputDial({ label, value, onChange, min, max, unit, icon: Icon }) {
       </div>
 
       {/* Glow effect on drag */}
-      <div className={`absolute inset-0 bg-primary/20 blur-xl transition-opacity duration-300 -z-10 ${
-        isDragging ? 'opacity-100' : 'opacity-0'
-      }`} />
+      <div
+        className={`absolute inset-0 bg-primary/20 blur-xl transition-opacity duration-300 -z-10 ${
+          isDragging ? "opacity-100" : "opacity-0"
+        }`}
+      />
     </div>
   );
 }
@@ -214,13 +255,13 @@ export default function BMICalculator() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'end start']
+    offset: ["start end", "end start"],
   });
 
   const bgY = useTransform(
     scrollYProgress,
     [0, 1],
-    prefersReducedMotion ? ['0%', '0%'] : ['-10%', '10%']
+    prefersReducedMotion ? ["0%", "0%"] : ["-10%", "10%"],
   );
 
   const bmi = weight / Math.pow(height / 100, 2);
@@ -234,19 +275,25 @@ export default function BMICalculator() {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-32 bg-dark relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="py-20 lg:py-32 bg-dark relative overflow-hidden"
+    >
       {/* Grid background */}
       <motion.div
         className="absolute inset-0 opacity-[0.03]"
         style={{ y: bgY }}
       >
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
           `,
-          backgroundSize: '60px 60px'
-        }} />
+            backgroundSize: "60px 60px",
+          }}
+        />
       </motion.div>
 
       {/* Accent orb */}
@@ -261,15 +308,19 @@ export default function BMICalculator() {
         >
           {/* Header */}
           <motion.div variants={fadeUp} className="mb-12 lg:mb-16">
-            <span className="font-mono text-primary text-xs tracking-widest">[ BODY ANALYSIS ]</span>
+            <span className="font-mono text-primary text-xs tracking-widest">
+              [ BODY ANALYSIS ]
+            </span>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-white mt-4">
-              KNOW YOUR<br />
+              KNOW YOUR
+              <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">
                 NUMBERS
               </span>
             </h2>
             <p className="text-white/40 mt-4 max-w-md">
-              Drag the dials or tap +/- to input your stats. Your BMI is calculated in real-time.
+              Drag the dials or tap +/- to input your stats. Your BMI is
+              calculated in real-time.
             </p>
           </motion.div>
 
@@ -326,7 +377,10 @@ export default function BMICalculator() {
                     <div className="text-center mt-8">
                       <motion.div
                         className="inline-block px-4 py-2 font-mono text-sm tracking-widest"
-                        style={{ backgroundColor: `${zone.color}20`, color: zone.color }}
+                        style={{
+                          backgroundColor: `${zone.color}20`,
+                          color: zone.color,
+                        }}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.6 }}
@@ -366,7 +420,9 @@ export default function BMICalculator() {
                       <Scale className="w-6 h-6 text-white/20" />
                     </div>
                     <p className="text-white/20 font-mono text-sm text-center">
-                      Adjust your weight and height<br />then hit calculate
+                      Adjust your weight and height
+                      <br />
+                      then hit calculate
                     </p>
                   </motion.div>
                 )}
