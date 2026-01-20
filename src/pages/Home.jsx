@@ -25,6 +25,8 @@ import SleepCalculator from '../sections/SleepCalculator';
 import WorkoutBPM from '../sections/WorkoutBPM';
 import ExerciseSubstitutions from '../sections/ExerciseSubstitutions';
 import BreathingExercises from '../sections/BreathingExercises';
+import WorkoutSplitPlanner from '../sections/WorkoutSplitPlanner';
+import RunningPaceCalculator from '../sections/RunningPaceCalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -61,6 +63,8 @@ const sections = [
   { Component: WorkoutBPM, zIndex: 49, sticky: false },
   { Component: ExerciseSubstitutions, zIndex: 49, sticky: false },
   { Component: BreathingExercises, zIndex: 49, sticky: false },
+  { Component: WorkoutSplitPlanner, zIndex: 49, sticky: false },
+  { Component: RunningPaceCalculator, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
