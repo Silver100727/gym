@@ -29,6 +29,7 @@ import WorkoutSplitPlanner from '../sections/WorkoutSplitPlanner';
 import RunningPaceCalculator from '../sections/RunningPaceCalculator';
 import MuscleRecoveryTracker from '../sections/MuscleRecoveryTracker';
 import FitnessChallengeGenerator from '../sections/FitnessChallengeGenerator';
+import RepTempoCalculator from '../sections/RepTempoCalculator';
 import TrainersPreview from '../sections/TrainersPreview';
 import TestimonialsSection from '../sections/TestimonialsSection';
 import TransformationGallery from '../sections/TransformationGallery';
@@ -69,6 +70,7 @@ const sections = [
   { Component: RunningPaceCalculator, zIndex: 49, sticky: false },
   { Component: MuscleRecoveryTracker, zIndex: 49, sticky: false },
   { Component: FitnessChallengeGenerator, zIndex: 49, sticky: false },
+  { Component: RepTempoCalculator, zIndex: 49, sticky: false },
   { Component: TrainersPreview, zIndex: 50, sticky: false },
   { Component: TestimonialsSection, zIndex: 60, sticky: false },
   { Component: TransformationGallery, zIndex: 70, sticky: false },
