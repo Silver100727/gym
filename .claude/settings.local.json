@@ -2,7 +2,25 @@
   "permissions": {
     "allow": [
       "Bash(npm run dev:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(npx create-expo-app@latest powerfit-mobile --template blank)",
+      "Bash(npm install:*)",
+      "Bash(npx expo start --clear)",
+      "Bash(npx expo start:*)",
+      "Bash(ping:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm start)",
+      "Bash(npx eas build:*)",
+      "Bash(eas build:*)",
+      "Bash(eas login:*)",
+      "Bash(where:*)",
+      "Bash(echo:*)",
+      "Bash(npx create-expo-app@latest:*)",
+      "Bash(dir:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(npx expo install:*)"
     ]
   }
 }
