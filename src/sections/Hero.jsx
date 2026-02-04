@@ -160,7 +160,7 @@ export default function Hero() {
             style={{ y: subtitleY }}
           >
             <Button size="xl" asChild>
-              <Link to="/pricing" className="gap-2">
+              <Link to="/start-journey" className="gap-2">
                 Start Your Journey
                 <ChevronRight className="w-5 h-5" />
               </Link>

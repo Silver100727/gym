@@ -9,6 +9,8 @@ import Pricing from './pages/Pricing';
 import Testimonials from './pages/Testimonials';
 import Contact from './pages/Contact';
 import Tools from './pages/Tools';
+import StartJourney from './pages/StartJourney';
+import AdminPanel from './pages/AdminPanel';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -36,6 +38,8 @@ export default function App() {
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/tools" element={<Tools />} />
+          <Route path="/start-journey" element={<StartJourney />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </AnimatePresence>
       <Footer />

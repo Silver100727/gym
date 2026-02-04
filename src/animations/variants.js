@@ -334,3 +334,39 @@ export const floatFast = {
     }
   }
 };
+
+// Step transition for multi-step forms/funnels
+export const stepTransition = {
+  initial: {
+    opacity: 0,
+    x: 50
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut"
+    }
+  },
+  exit: {
+    opacity: 0,
+    x: -50,
+    transition: {
+      duration: 0.3,
+      ease: "easeIn"
+    }
+  }
+};
+
+// Progress indicator fill animation
+export const progressFill = {
+  initial: { width: 0 },
+  animate: (progress) => ({
+    width: `${progress}%`,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  })
+};

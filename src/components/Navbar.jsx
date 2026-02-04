@@ -67,7 +67,7 @@ export default function Navbar() {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button asChild size="sm" className="rounded-full">
-              <Link to="/contact">Join Now</Link>
+              <Link to="/start-journey">Start Journey</Link>
             </Button>
           </div>
 
@@ -97,7 +97,7 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <Button asChild size="sm" className="mt-3 rounded-full">
-                  <Link to="/contact">Join Now</Link>
+                  <Link to="/start-journey">Start Journey</Link>
                 </Button>
               </div>
             </SheetContent>
